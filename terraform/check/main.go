@@ -7,7 +7,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
 
-	"github.com/tetrateio/tetrate/cloud/providers/terraform/check/internal/provider"
+	"github.com/masterfuzz/tfpfbridge-test/terraform/check/internal/provider"
 )
 
 // Run "go generate" to format example terraform files and generate the docs for the registry/website

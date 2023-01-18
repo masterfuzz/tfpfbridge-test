@@ -13,8 +13,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"github.com/tetrateio/tetrate/cloud/providers/terraform/check/internal/helpers"
-	"github.com/tetrateio/tetrate/cloud/providers/terraform/check/internal/modifiers"
+	"github.com/masterfuzz/tfpfbridge-test/terraform/check/internal/helpers"
+	"github.com/masterfuzz/tfpfbridge-test/terraform/check/internal/modifiers"
 )
 
 var _ resource.Resource = &LocalCommandResource{}

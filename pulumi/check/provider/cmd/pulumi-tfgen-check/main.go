@@ -1,8 +1,8 @@
 package main
 
 import (
+	check "github.com/masterfuzz/tfpfbridge-test/pulumi/check/provider"
 	"github.com/pulumi/pulumi-terraform-bridge/pkg/tfpfbridge/tfgen"
-	check "github.com/tetrateio/tetrate/cloud/providers/check/provider"
 )
 
 func main() {

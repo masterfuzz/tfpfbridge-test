@@ -1,4 +1,4 @@
-module github.com/tetrateio/tetrate/cloud/providers/terraform/check
+module github.com/masterfuzz/tfpfbridge-test/terraform/check
 
 go 1.19
 

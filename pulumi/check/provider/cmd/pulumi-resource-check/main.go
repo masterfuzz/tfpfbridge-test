@@ -3,8 +3,8 @@ package main
 import (
 	_ "embed"
 
+	check "github.com/masterfuzz/tfpfbridge-test/pulumi/check/provider"
 	bridge "github.com/pulumi/pulumi-terraform-bridge/pkg/tfpfbridge"
-	check "github.com/tetrateio/tetrate/cloud/providers/check/provider"
 )
 
 //go:embed schema.json

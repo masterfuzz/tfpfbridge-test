@@ -5,9 +5,9 @@ import (
 
 	framework "github.com/hashicorp/terraform-plugin-framework/provider"
 	// "github.com/pulumi/pulumi-terraform-bridge/pkg/tfbridge"
+	provider "github.com/masterfuzz/tfpfbridge-test/terraform/check/pkg"
 	"github.com/pulumi/pulumi-terraform-bridge/pkg/tfpfbridge/info"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
-	provider "github.com/tetrateio/tetrate/cloud/providers/terraform/check/pkg"
 )
 
 const checkPkg = "check"
