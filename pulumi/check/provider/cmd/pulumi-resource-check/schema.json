@@ -1,0 +1,276 @@
+{
+    "name": "check",
+    "attribution": "This Pulumi package is based on the [`check` Terraform Provider](https://github.com/tetrateio/terraform-provider-check).",
+    "meta": {
+        "moduleFormat": "(.*)(?:/[^/]*)"
+    },
+    "language": {
+        "nodejs": {
+            "compatibility": "tfbridge20",
+            "dependencies": {
+                "@pulumi/pulumi": "^3.0.0"
+            },
+            "devDependencies": {
+                "@types/node": "^10.0.0"
+            },
+            "disableUnionOutputTypes": true,
+            "packageDescription": ". Based on terraform-provider-check: version vdev",
+            "packageName": "",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/tetrateio/terraform-provider-check)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-check` repo](/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-check` repo](https://github.com/tetrateio/terraform-provider-check/issues).",
+            "typescriptVersion": ""
+        },
+        "python": {
+            "compatibility": "tfbridge20",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/tetrateio/terraform-provider-check)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-check` repo](/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-check` repo](https://github.com/tetrateio/terraform-provider-check/issues)."
+        }
+    },
+    "config": {
+        "variables": {
+            "endpoint": {
+                "type": "string",
+                "description": "Example provider attribute\n"
+            }
+        }
+    },
+    "provider": {
+        "description": "The provider type for the check package. By default, resources use package-wide configuration\nsettings, however an explicit `Provider` instance may be created and passed during resource\nconstruction to achieve fine-grained programmatic control over provider settings. See the\n[documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.\n",
+        "properties": {
+            "endpoint": {
+                "type": "string",
+                "description": "Example provider attribute\n"
+            }
+        },
+        "inputProperties": {
+            "endpoint": {
+                "type": "string",
+                "description": "Example provider attribute\n"
+            }
+        }
+    },
+    "resources": {
+        "check:index/httpHealth:HttpHealth": {
+            "properties": {
+                "consecutiveSuccesses": {
+                    "type": "integer",
+                    "description": "Consecutive successes required\n"
+                },
+                "headers": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "HTTP Headers\n"
+                },
+                "interval": {
+                    "type": "integer",
+                    "description": "Interval\n"
+                },
+                "method": {
+                    "type": "string",
+                    "description": "Method\n"
+                },
+                "retries": {
+                    "type": "integer",
+                    "description": "Retries\n"
+                },
+                "statusCode": {
+                    "type": "string",
+                    "description": "Status Code\n"
+                },
+                "timeout": {
+                    "type": "integer",
+                    "description": "Timeout\n"
+                },
+                "url": {
+                    "type": "string",
+                    "description": "URL\n"
+                }
+            },
+            "required": [
+                "consecutiveSuccesses",
+                "interval",
+                "method",
+                "retries",
+                "statusCode",
+                "timeout",
+                "url"
+            ],
+            "inputProperties": {
+                "consecutiveSuccesses": {
+                    "type": "integer",
+                    "description": "Consecutive successes required\n"
+                },
+                "headers": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "HTTP Headers\n"
+                },
+                "interval": {
+                    "type": "integer",
+                    "description": "Interval\n"
+                },
+                "method": {
+                    "type": "string",
+                    "description": "Method\n"
+                },
+                "retries": {
+                    "type": "integer",
+                    "description": "Retries\n"
+                },
+                "statusCode": {
+                    "type": "string",
+                    "description": "Status Code\n"
+                },
+                "timeout": {
+                    "type": "integer",
+                    "description": "Timeout\n"
+                },
+                "url": {
+                    "type": "string",
+                    "description": "URL\n"
+                }
+            },
+            "requiredInputs": [
+                "url"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering HttpHealth resources.\n",
+                "properties": {
+                    "consecutiveSuccesses": {
+                        "type": "integer",
+                        "description": "Consecutive successes required\n"
+                    },
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "HTTP Headers\n"
+                    },
+                    "interval": {
+                        "type": "integer",
+                        "description": "Interval\n"
+                    },
+                    "method": {
+                        "type": "string",
+                        "description": "Method\n"
+                    },
+                    "retries": {
+                        "type": "integer",
+                        "description": "Retries\n"
+                    },
+                    "statusCode": {
+                        "type": "string",
+                        "description": "Status Code\n"
+                    },
+                    "timeout": {
+                        "type": "integer",
+                        "description": "Timeout\n"
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "URL\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "check:index/localCommand:LocalCommand": {
+            "properties": {
+                "command": {
+                    "type": "string",
+                    "description": "Command\n"
+                },
+                "consecutiveSuccesses": {
+                    "type": "integer",
+                    "description": "Consecutive Successes\n"
+                },
+                "interval": {
+                    "type": "integer",
+                    "description": "Interval\n"
+                },
+                "retries": {
+                    "type": "integer",
+                    "description": "Retries\n"
+                },
+                "timeout": {
+                    "type": "integer",
+                    "description": "Timeout\n"
+                },
+                "workingDirectory": {
+                    "type": "string",
+                    "description": "Working Directory\n"
+                }
+            },
+            "required": [
+                "command",
+                "consecutiveSuccesses",
+                "interval",
+                "retries",
+                "timeout",
+                "workingDirectory"
+            ],
+            "inputProperties": {
+                "command": {
+                    "type": "string",
+                    "description": "Command\n"
+                },
+                "consecutiveSuccesses": {
+                    "type": "integer",
+                    "description": "Consecutive Successes\n"
+                },
+                "interval": {
+                    "type": "integer",
+                    "description": "Interval\n"
+                },
+                "retries": {
+                    "type": "integer",
+                    "description": "Retries\n"
+                },
+                "timeout": {
+                    "type": "integer",
+                    "description": "Timeout\n"
+                },
+                "workingDirectory": {
+                    "type": "string",
+                    "description": "Working Directory\n"
+                }
+            },
+            "requiredInputs": [
+                "command"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering LocalCommand resources.\n",
+                "properties": {
+                    "command": {
+                        "type": "string",
+                        "description": "Command\n"
+                    },
+                    "consecutiveSuccesses": {
+                        "type": "integer",
+                        "description": "Consecutive Successes\n"
+                    },
+                    "interval": {
+                        "type": "integer",
+                        "description": "Interval\n"
+                    },
+                    "retries": {
+                        "type": "integer",
+                        "description": "Retries\n"
+                    },
+                    "timeout": {
+                        "type": "integer",
+                        "description": "Timeout\n"
+                    },
+                    "workingDirectory": {
+                        "type": "string",
+                        "description": "Working Directory\n"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
