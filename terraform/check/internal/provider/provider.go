@@ -2,7 +2,6 @@ package provider
 
 import (
 	"context"
-	"net/http"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -46,22 +45,24 @@ func (p *CheckProvider) GetSchema(ctx context.Context) (tfsdk.Schema, diag.Diagn
 }
 
 func (p *CheckProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
-	var data CheckProviderModel
-
-	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	// Configuration values are now available.
-	// if data.Endpoint.IsNull() { /* ... */ }
-
-	// Example client configuration for data sources and resources
-	client := http.DefaultClient
-	resp.DataSourceData = client
-	resp.ResourceData = client
 }
+
+// 	var data CheckProviderModel
+
+// 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+
+// 	if resp.Diagnostics.HasError() {
+// 		return
+// 	}
+
+// 	// Configuration values are now available.
+// 	// if data.Endpoint.IsNull() { /* ... */ }
+
+// 	// Example client configuration for data sources and resources
+// 	client := http.DefaultClient
+// 	resp.DataSourceData = client
+// 	resp.ResourceData = client
+// }
 
 func (p *CheckProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{

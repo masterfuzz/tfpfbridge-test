@@ -1,0 +1,7 @@
+name: basicprogram
+runtime: yaml
+resources:
+  r1:
+    type: check:index/httpHealth:HttpHealth
+    properties:
+      url: "https://example.com"

@@ -35,8 +35,8 @@ func MyProvider() info.ProviderInfo {
 		P:                 getProvider,
 		Name:              "check",
 		GitHubOrg:         "tetrateio",
-		TFProviderVersion: "dev",
-		Version:           "dev",
+		TFProviderVersion: "0.0.1",
+		Version:           "0.0.1",
 		Resources: map[string]*info.ResourceInfo{
 			"check_http_health":   {Tok: checkResourceTok(checkMod, "HttpHealth")},
 			"check_local_command": {Tok: checkResourceTok(checkMod, "LocalCommand")},

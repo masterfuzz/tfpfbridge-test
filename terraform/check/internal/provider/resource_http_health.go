@@ -27,9 +27,7 @@ func NewHttpHealthResource() resource.Resource {
 	return &HttpHealthResource{}
 }
 
-type HttpHealthResource struct {
-	client *http.Client
-}
+type HttpHealthResource struct{}
 
 // GetSchema implements resource.Resource
 func (*HttpHealthResource) GetSchema(context.Context) (tfsdk.Schema, diag.Diagnostics) {
@@ -123,25 +121,25 @@ func (r *HttpHealthResource) Metadata(ctx context.Context, req resource.Metadata
 	resp.TypeName = req.ProviderTypeName + "_http_health"
 }
 
-func (r *HttpHealthResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
-	// Prevent panic if the provider has not been configured.
-	if req.ProviderData == nil {
-		return
-	}
+// func (r *HttpHealthResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+// 	// Prevent panic if the provider has not been configured.
+// 	if req.ProviderData == nil {
+// 		return
+// 	}
 
-	client, ok := req.ProviderData.(*http.Client)
+// 	client, ok := req.ProviderData.(*http.Client)
 
-	if !ok {
-		resp.Diagnostics.AddError(
-			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *http.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
-		)
+// 	if !ok {
+// 		resp.Diagnostics.AddError(
+// 			"Unexpected Resource Configure Type",
+// 			fmt.Sprintf("Expected *http.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+// 		)
 
-		return
-	}
+// 		return
+// 	}
 
-	r.client = client
-}
+// 	r.client = client
+// }
 
 // func inStringRange(v int64, r string) (bool) {
 // 	for _, interval := range strings.Split(r, ",") {
@@ -203,8 +201,9 @@ func (r *HttpHealthResource) Create(ctx context.Context, req resource.CreateRequ
 		ConsecutiveSuccesses: int(data.ConsecutiveSuccesses.ValueInt64()),
 	}
 
+	client := http.DefaultClient
 	result := window.Do(func() bool {
-		httpResponse, err := r.client.Do(&http.Request{
+		httpResponse, err := client.Do(&http.Request{
 			URL:    endpoint,
 			Method: data.Method.ValueString(),
 			Header: headers,
