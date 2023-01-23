@@ -8,10 +8,11 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
-	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 
@@ -29,80 +30,65 @@ func NewHttpHealthResource() resource.Resource {
 
 type HttpHealthResource struct{}
 
-// GetSchema implements resource.Resource
-func (*HttpHealthResource) GetSchema(context.Context) (tfsdk.Schema, diag.Diagnostics) {
-	return tfsdk.Schema{
+// Schema implements resource.Resource
+func (*HttpHealthResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
 		MarkdownDescription: "HTTPS Healthcheck",
 
-		Attributes: map[string]tfsdk.Attribute{
-			"url": {
-				Type:                types.StringType,
+		Attributes: map[string]schema.Attribute{
+			"url": schema.StringAttribute{
 				MarkdownDescription: "URL",
 				Required:            true,
 			},
-			"retries": {
+			"retries": schema.Int64Attribute{
 				MarkdownDescription: "Retries",
 				Optional:            true,
 				Computed:            true,
-				Type:                types.Int64Type,
-				PlanModifiers:       []tfsdk.AttributePlanModifier{modifiers.DefaultInt64(5)},
-				// PlanModifiers:       []planmodifier.Int64{modifiers.DefaultInt64(5)},
+				PlanModifiers:       []planmodifier.Int64{modifiers.DefaultInt64(5)},
 			},
-			"method": {
+			"method": schema.StringAttribute{
 				MarkdownDescription: "Method",
 				Optional:            true,
 				Computed:            true,
-				Type:                types.StringType,
-				PlanModifiers:       []tfsdk.AttributePlanModifier{modifiers.DefaultString("GET")},
-				// PlanModifiers:       []planmodifier.String{modifiers.DefaultString("GET")},
+				PlanModifiers:       []planmodifier.String{modifiers.DefaultString("GET")},
 			},
-			"timeout": {
+			"timeout": schema.Int64Attribute{
 				MarkdownDescription: "Timeout",
-				Type:                types.Int64Type,
 				Optional:            true,
 				Computed:            true,
-				PlanModifiers:       []tfsdk.AttributePlanModifier{modifiers.DefaultInt64(5000)},
-				// PlanModifiers:       []planmodifier.Int64{modifiers.DefaultInt64(5000)},
+				PlanModifiers:       []planmodifier.Int64{modifiers.DefaultInt64(5000)},
 			},
-			"interval": {
+			"interval": schema.Int64Attribute{
 				MarkdownDescription: "Interval",
-				Type:                types.Int64Type,
 				Optional:            true,
 				Computed:            true,
-				PlanModifiers:       []tfsdk.AttributePlanModifier{modifiers.DefaultInt64(200)},
+				PlanModifiers:       []planmodifier.Int64{modifiers.DefaultInt64(200)},
 			},
-			"status_code": {
+			"status_code": schema.StringAttribute{
 				MarkdownDescription: "Status Code",
-				Type:                types.StringType,
 				Optional:            true,
 				Computed:            true,
-				PlanModifiers:       []tfsdk.AttributePlanModifier{modifiers.DefaultString("200")},
-				// PlanModifiers:       []planmodifier.String{modifiers.DefaultString("")},
+				PlanModifiers:       []planmodifier.String{modifiers.DefaultString("200")},
 			},
-			"consecutive_successes": {
+			"consecutive_successes": schema.Int64Attribute{
 				MarkdownDescription: "Consecutive successes required",
-				Type:                types.Int64Type,
 				Optional:            true,
 				Computed:            true,
-				PlanModifiers:       []tfsdk.AttributePlanModifier{modifiers.DefaultInt64(1)},
+				PlanModifiers:       []planmodifier.Int64{modifiers.DefaultInt64(200)},
 			},
-			"headers": {
+			"headers": schema.MapAttribute{
+				ElementType:         types.StringType,
 				MarkdownDescription: "HTTP Headers",
-				Type:                types.MapType{ElemType: types.StringType},
 				Optional:            true,
 			},
-			"id": {
+			"id": schema.StringAttribute{
 				Computed:            true,
-				Type:                types.StringType,
 				MarkdownDescription: "Identifier",
-				PlanModifiers:       []tfsdk.AttributePlanModifier{resource.UseStateForUnknown()},
-				// PlanModifiers: []tfsdk.AttributePlanModifier{
-				// 	tfsdk.
-				// },
+				PlanModifiers:       []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 			},
 		},
-	}, diag.Diagnostics{}
+	}
 }
 
 type HttpHealthResourceModel struct {

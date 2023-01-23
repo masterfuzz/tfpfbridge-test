@@ -3,10 +3,10 @@ module github.com/masterfuzz/tfpfbridge-test/pulumi/check
 go 1.19
 
 require (
-	github.com/hashicorp/terraform-plugin-framework v0.16.0
+	github.com/hashicorp/terraform-plugin-framework v1.1.1
 	github.com/masterfuzz/tfpfbridge-test/terraform/check v0.0.0-20230118204423-e77cdc1a6fbf
-	github.com/pulumi/pulumi-terraform-bridge/pkg/tfpfbridge v0.0.0-20221222212801-98d2a7e6b424
-	github.com/pulumi/pulumi/sdk/v3 v3.50.1
+	github.com/pulumi/pulumi-terraform-bridge/pkg/tfpfbridge v0.0.0-20230120143314-6ffb2faf051e
+	github.com/pulumi/pulumi/sdk/v3 v3.51.0
 )
 
 require (
@@ -106,7 +106,7 @@ require (
 	github.com/hashicorp/go-hclog v1.2.2 // indirect
 	github.com/hashicorp/go-immutable-radix v1.3.1 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
-	github.com/hashicorp/go-plugin v1.4.6 // indirect
+	github.com/hashicorp/go-plugin v1.4.8 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.1 // indirect
 	github.com/hashicorp/go-rootcerts v1.0.2 // indirect
 	github.com/hashicorp/go-safetemp v1.0.0 // indirect
@@ -120,7 +120,7 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hashicorp/hcl/v2 v2.15.0 // indirect
 	github.com/hashicorp/hil v0.0.0-20190212132231-97b3a9cdfa93 // indirect
-	github.com/hashicorp/terraform-plugin-go v0.14.2 // indirect
+	github.com/hashicorp/terraform-plugin-go v0.14.3 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.7.0 // indirect
 	github.com/hashicorp/terraform-registry-address v0.1.0 // indirect
 	github.com/hashicorp/terraform-svchost v0.0.0-20200729002733-f050f53b9734 // indirect
@@ -169,7 +169,7 @@ require (
 	github.com/pulumi/pulumi-java/pkg v0.7.1 // indirect
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.36.1-0.20221222212801-98d2a7e6b424 // indirect
 	github.com/pulumi/pulumi-yaml v1.0.4 // indirect
-	github.com/pulumi/pulumi/pkg/v3 v3.50.1 // indirect
+	github.com/pulumi/pulumi/pkg/v3 v3.51.0 // indirect
 	github.com/pulumi/schema-tools v0.1.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
@@ -226,3 +226,5 @@ require (
 
 // replace github.com/masterfuzz/tfpfbridge-test/pulumi/check/
 replace github.com/masterfuzz/tfpfbridge-test/terraform/check => ../../terraform/check
+
+replace github.com/hashicorp/terraform-plugin-framework => github.com/hashicorp/terraform-plugin-framework v1.1.1

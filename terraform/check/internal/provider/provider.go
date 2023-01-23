@@ -4,10 +4,9 @@ import (
 	"context"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
+	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
-	tfsdk "github.com/hashicorp/terraform-plugin-framework/tfsdk"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -22,6 +21,18 @@ type CheckProvider struct {
 	version string
 }
 
+// Schema implements provider.Provider
+func (*CheckProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
+	resp.Schema = schema.Schema{
+		Attributes: map[string]schema.Attribute{
+			"endpoint": schema.StringAttribute{
+				MarkdownDescription: "Example provider attribute",
+				Optional:            true,
+			},
+		},
+	}
+}
+
 // CheckProviderModel describes the provider data model.
 type CheckProviderModel struct {
 	Endpoint types.String `tfsdk:"endpoint"`
@@ -30,18 +41,6 @@ type CheckProviderModel struct {
 func (p *CheckProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
 	resp.TypeName = "check"
 	resp.Version = p.version
-}
-
-func (p *CheckProvider) GetSchema(ctx context.Context) (tfsdk.Schema, diag.Diagnostics) {
-	return tfsdk.Schema{
-		Attributes: map[string]tfsdk.Attribute{
-			"endpoint": tfsdk.Attribute{
-				Type:                types.StringType,
-				MarkdownDescription: "Example provider attribute",
-				Optional:            true,
-			},
-		},
-	}, diag.Diagnostics{}
 }
 
 func (p *CheckProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {

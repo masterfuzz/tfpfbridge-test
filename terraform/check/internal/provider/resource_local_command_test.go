@@ -25,7 +25,7 @@ func TestAccLocalCommandResource(t *testing.T) {
 func testAccLocalCommandResourceConfig() string {
 	return fmt.Sprintf(`
 resource "check_local_command" "test" {
-	command = "echo hello"
+	command = "true"
 }`)
 
 }

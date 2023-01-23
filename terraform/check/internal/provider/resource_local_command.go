@@ -7,10 +7,11 @@ import (
 	"os/exec"
 	"time"
 
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
-	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/masterfuzz/tfpfbridge-test/terraform/check/internal/helpers"
@@ -21,6 +22,54 @@ var _ resource.Resource = &LocalCommandResource{}
 var _ resource.ResourceWithImportState = &LocalCommandResource{}
 
 type LocalCommandResource struct{}
+
+// Schema implements resource.Resource
+func (*LocalCommandResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = schema.Schema{
+		MarkdownDescription: "Local Command",
+
+		Attributes: map[string]schema.Attribute{
+			"command": schema.StringAttribute{
+				MarkdownDescription: "Command",
+				Required:            true,
+			},
+			"timeout": schema.Int64Attribute{
+				MarkdownDescription: "Timeout",
+				Optional:            true,
+				Computed:            true,
+				PlanModifiers:       []planmodifier.Int64{modifiers.DefaultInt64(500)},
+			},
+			"retries": schema.Int64Attribute{
+				MarkdownDescription: "Retries",
+				Optional:            true,
+				Computed:            true,
+				PlanModifiers:       []planmodifier.Int64{modifiers.DefaultInt64(5)},
+			},
+			"interval": schema.Int64Attribute{
+				MarkdownDescription: "Interval",
+				Optional:            true,
+				Computed:            true,
+				PlanModifiers:       []planmodifier.Int64{modifiers.DefaultInt64(200)},
+			},
+			"consecutive_successes": schema.Int64Attribute{
+				MarkdownDescription: "Consecutive Successes",
+				Optional:            true,
+				Computed:            true,
+				PlanModifiers:       []planmodifier.Int64{modifiers.DefaultInt64(200)},
+			},
+			"working_directory": schema.StringAttribute{
+				MarkdownDescription: "Working Directory",
+				Optional:            true,
+				Computed:            true,
+				PlanModifiers:       []planmodifier.String{modifiers.DefaultString(".")},
+			},
+			"id": schema.StringAttribute{
+				Computed:            true,
+				MarkdownDescription: "Identifier",
+				PlanModifiers:       []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+			},
+		}}
+}
 
 type LocalCommandResourceModel struct {
 	Command              types.String `tfsdk:"command"`
@@ -63,11 +112,13 @@ func (*LocalCommandResource) Create(ctx context.Context, req resource.CreateRequ
 
 		err := cmd.Run()
 		if err != nil {
+			fmt.Printf("error running command %s", err.Error())
 			resp.Diagnostics.AddWarning("Error running command", fmt.Sprintf("%s", err))
+			tflog.Error(ctx, fmt.Sprintf("Error running command %s", err))
 			return false
 		}
-		tflog.Debug(ctx, stdout.String())
-		tflog.Debug(ctx, stderr.String())
+		tflog.Debug(ctx, fmt.Sprintf("Command stdout: %s", stdout.String()))
+		tflog.Debug(ctx, fmt.Sprintf("Command stdout: %s", stderr.String()))
 		return true
 	})
 
@@ -114,64 +165,6 @@ func (*LocalCommandResource) Read(ctx context.Context, req resource.ReadRequest,
 	}
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
-}
-
-// Schema implements resource.Resource
-func (*LocalCommandResource) GetSchema(ctx context.Context) (tfsdk.Schema, diag.Diagnostics) {
-	return tfsdk.Schema{
-		MarkdownDescription: "Local Command",
-
-		Attributes: map[string]tfsdk.Attribute{
-			"command": {
-				Type:                types.StringType,
-				MarkdownDescription: "Command",
-				Required:            true,
-			},
-			"timeout": {
-				MarkdownDescription: "Timeout",
-				Type:                types.Int64Type,
-				Optional:            true,
-				Computed:            true,
-				PlanModifiers:       []tfsdk.AttributePlanModifier{modifiers.DefaultInt64(5000)},
-			},
-			"retries": {
-				MarkdownDescription: "Retries",
-				Type:                types.Int64Type,
-				Optional:            true,
-				Computed:            true,
-				PlanModifiers:       []tfsdk.AttributePlanModifier{modifiers.DefaultInt64(5)},
-			},
-			"interval": {
-				MarkdownDescription: "Interval",
-				Type:                types.Int64Type,
-				Optional:            true,
-				Computed:            true,
-				PlanModifiers:       []tfsdk.AttributePlanModifier{modifiers.DefaultInt64(200)},
-			},
-			"consecutive_successes": {
-				MarkdownDescription: "Consecutive Successes",
-				Type:                types.Int64Type,
-				Optional:            true,
-				Computed:            true,
-				PlanModifiers:       []tfsdk.AttributePlanModifier{modifiers.DefaultInt64(1)},
-			},
-			"working_directory": {
-				MarkdownDescription: "Working Directory",
-				Type:                types.StringType,
-				Optional:            true,
-				Computed:            true,
-				PlanModifiers:       []tfsdk.AttributePlanModifier{modifiers.DefaultString("")},
-			},
-			"id": {
-				Type:                types.StringType,
-				Computed:            true,
-				MarkdownDescription: "Identifier",
-				PlanModifiers:       tfsdk.AttributePlanModifiers{resource.UseStateForUnknown()},
-				// tfsdk.AttributePlanModifier{
-				// 	stringplanmodifier.UseStateForUnknown(),
-				// },
-			},
-		}}, diag.Diagnostics{}
 }
 
 // Update implements resource.Resource

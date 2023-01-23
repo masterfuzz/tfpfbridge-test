@@ -3,6 +3,9 @@
 
 provider: provider.build provider.test provider.install
 
+provider.mod:
+	cd terraform/check && go mod tidy
+
 provider.build:
 	cd terraform/check && go build
 
@@ -13,6 +16,9 @@ provider.test:
 	cd terraform/check && TF_ACC=1 go test ./... -v $(TESTARGS) -timeout 120m
 
 pulumi: pulumi.schema pulumi.bridge pulumi.install
+
+pulumi.mod:
+	cd pulumi/check && go mod tidy
 
 pulumi.schema:
 	cd pulumi/check/provider/cmd/pulumi-tfgen-check && go run main.go schema -o ../pulumi-resource-check
